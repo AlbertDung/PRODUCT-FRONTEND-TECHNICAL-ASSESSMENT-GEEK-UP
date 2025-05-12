@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    @apply antialiased;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900 min-h-screen font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-offset-2;
+  }
+  
+  .btn-primary {
+    @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 shadow-sm hover:shadow;
+  }
+  
+  .btn-secondary {
+    @apply bg-secondary-100 text-secondary-800 hover:bg-secondary-200 focus:ring-secondary-500 shadow-sm hover:shadow;
+  }
+
+  .btn-accent {
+    @apply bg-accent-500 text-white hover:bg-accent-600 focus:ring-accent-500 shadow-sm hover:shadow;
+  }
+  
+  .table-container {
+    @apply bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100;
+  }
+  
+  .table-header {
+    @apply bg-gray-50 text-left text-sm font-medium text-gray-500 uppercase tracking-wider px-6 py-4;
+  }
+  
+  .table-cell {
+    @apply px-6 py-4 whitespace-nowrap text-sm text-gray-900 border-t border-gray-100;
+  }
+  
+  .card {
+    @apply bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:shadow-md transition-shadow duration-200;
+  }
+  
+  .input {
+    @apply block w-full rounded-lg border-gray-200 shadow-sm focus:border-primary-500 focus:ring-primary-500 transition-colors duration-200;
+  }
+
+  .nav-link {
+    @apply text-gray-600 hover:text-primary-600 transition-colors duration-200;
+  }
+
+  .nav-link-active {
+    @apply text-primary-600 font-medium;
+  }
+
+  .section-title {
+    @apply text-3xl font-display font-bold text-gray-900 mb-6;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-gray-600 mb-8 max-w-2xl;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-accent-500;
+  }
+
+  .glass-card {
+    @apply backdrop-blur-lg bg-white/80 border border-white/20 shadow-lg;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  @apply w-2;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 rounded-full hover:bg-gray-400 transition-colors duration-200;
+}
