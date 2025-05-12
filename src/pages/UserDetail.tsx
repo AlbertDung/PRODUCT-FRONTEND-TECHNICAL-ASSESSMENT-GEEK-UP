@@ -133,8 +133,8 @@ const UserDetail = () => {
                 {album.title}
               </h3>
               <div className="flex flex-col items-center mb-4">
-                <div className="aspect-w-16 aspect-h-9 w-full max-w-[180px] bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center mb-2">
-                  <span className="text-4xl font-display font-bold text-primary-600/20 select-none ">
+                <div className="aspect-w-16 aspect-h-9 w-full max-w-[180px] bg-gray-100 rounded-lg overflow-hidden flex items-center justify-center mb-2 h-[80px]">
+                  <span className="text-4xl font-display font-bold text-primary-600/20 select-none flex items-center justify-center w-full h-full">
                     {album.id}
                   </span>
                 </div>
