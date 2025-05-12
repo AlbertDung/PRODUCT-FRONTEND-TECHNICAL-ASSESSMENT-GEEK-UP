@@ -15,7 +15,7 @@ Before you begin, ensure you have the following installed:
 
 ```bash
 git clone https://github.com/your-username/geekup-web-app.git
-cd geekup-web-app
+cd web-app
 ```
 
 ### 2. Install Dependencies
