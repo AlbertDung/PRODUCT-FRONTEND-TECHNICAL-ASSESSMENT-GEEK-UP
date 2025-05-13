@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { FiImage, FiUsers, FiMenu, FiX, FiHome, FiSettings, FiBarChart2, FiGrid, FiChevronLeft, FiMoon, FiSun } from 'react-icons/fi';
 import { useState, useEffect } from 'react';
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme } from '../hooks/useTheme';
 
 interface LayoutProps {
   children: React.ReactNode;
