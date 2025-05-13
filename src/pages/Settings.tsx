@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FiUser, FiBell, FiLock, FiGlobe, FiMoon, FiSun, FiSave } from 'react-icons/fi';
-import { useTheme } from '../contexts/ThemeContext';
+import { useTheme } from '../hooks/useTheme';
 
 const Settings = () => {
   const [activeTab, setActiveTab] = useState('profile');
