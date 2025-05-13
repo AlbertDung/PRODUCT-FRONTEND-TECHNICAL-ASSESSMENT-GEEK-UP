@@ -12,7 +12,7 @@ A modern web application built with React, TypeScript, and Vite, designed for ma
 
 | Home | Albums (Grid) | Albums (List) | Album Details | Photo Preview | User List | User Details |
 |------|---------------|---------------|--------------|---------------|-----------|-------------|
-| ![Home](result/Web/home.png) | ![Albums Grid](result/Web/Albums_GridView.jpeg) | ![Albums List](result/Web/Albums_ListView.png) | ![Album Details](result/Web/Album_Details.jpeg) | ![Photo Preview](result/Web/Photo_Preview.jpeg) | ![User List](result/Web/User.png) | ![User Details](result/Web/User_Details.png) |
+| ![Home](result/Web/Home.png) | ![Albums Grid](result/Web/Albums_GridView.jpeg) | ![Albums List](result/Web/Albums_ListView.png) | ![Album Details](result/Web/Album_Details.jpeg) | ![Photo Preview](result/Web/Photo_Preview.jpeg) | ![User List](result/Web/User.png) | ![User Details](result/Web/User_Details.png) |
 
 ### Mobile App Platform
 
