@@ -1,15 +1,32 @@
 # GeekUp Web App
 
-A modern web application built with React, TypeScript, and Vite.
+A modern web application built with React, TypeScript, and Vite, designed for managing and organizing tech events and meetups.
 
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
-- [Node.js](https://nodejs.org/) (v16 or higher)
+- [Node.js](https://nodejs.org/) (v18.0.0 or higher)
 - [Git](https://git-scm.com/)
-- A code editor (VS Code recommended)
+- [VS Code](https://code.visualstudio.com/) (recommended)
+- [GitHub CLI](https://cli.github.com/) (optional, for easier GitHub integration)
 
-## Getting Started
+## Environment Setup
+
+1. **Install Node.js**
+   - Download and install from [Node.js official website](https://nodejs.org/)
+   - Verify installation:
+     ```bash
+     node --version
+     npm --version
+     ```
+
+2. **Configure Git**
+   ```bash
+   git config --global user.name "Your Name"
+   git config --global user.email "your.email@example.com"
+   ```
+
+## Project Setup
 
 ### 1. Clone the Repository
 
@@ -21,44 +38,112 @@ cd web-app
 ### 2. Install Dependencies
 
 ```bash
+# Install all dependencies
 npm install
+
+# If you encounter any issues, try clearing npm cache
+npm cache clean --force
 ```
 
-### 3. Start the Development Server
+### 3. Environment Variables
+
+Create a `.env` file in the root directory:
 
 ```bash
+cp .env.example .env
+```
+
+Required environment variables:
+```
+VITE_API_URL=your_api_url
+VITE_APP_ENV=development
+```
+
+### 4. Start Development Server
+
+```bash
+# Start the development server
 npm run dev
+
+# The application will be available at:
+# http://localhost:5173
 ```
 
-The application will be available at `http://localhost:5173` by default.
-
-### 4. Build for Production
+### 5. Build for Production
 
 ```bash
+# Create production build
 npm run build
-```
 
-The build artifacts will be stored in the `dist/` directory.
+# Preview production build locally
+npm run preview
+```
 
 ## Available Scripts
 
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Create production build
 - `npm run preview` - Preview production build locally
-- `npm run lint` - Run ESLint
+- `npm run lint` - Run ESLint to check code quality
 - `npm run type-check` - Run TypeScript type checking
+- `npm run test` - Run unit tests
+- `npm run test:coverage` - Run tests with coverage report
+- `npm run format` - Format code with Prettier
 
-## Project Structure
+## Development Guidelines
 
-```
-geekup-web-app/
-├── src/              # Source files
-├── public/           # Static assets
-├── dist/            # Production build
-├── node_modules/    # Dependencies
-├── package.json     # Project configuration
-└── tsconfig.json    # TypeScript configuration
-```
+1. **Code Style**
+   - Follow the ESLint and Prettier configurations
+   - Use TypeScript for all new files
+   - Write meaningful commit messages
+
+2. **Git Workflow**
+   ```bash
+   # Create a new branch
+   git checkout -b feature/your-feature-name
+
+   # After making changes
+   git add .
+   git commit -m "feat: your feature description"
+   git push origin feature/your-feature-name
+   ```
+
+3. **Testing**
+   - Write tests for new features
+   - Maintain test coverage above 80%
+   - Run tests before committing
+
+## Troubleshooting
+
+1. **Node Modules Issues**
+   ```bash
+   # Remove node_modules and reinstall
+   rm -rf node_modules
+   npm install
+   ```
+
+2. **Port Already in Use**
+   ```bash
+   # Kill process using port 5173
+   npx kill-port 5173
+   ```
+
+3. **TypeScript Errors**
+   ```bash
+   # Clear TypeScript cache
+   rm -rf node_modules/.cache/typescript
+   ```
+
+## Support
+
+For any issues or questions:
+1. Check the [documentation](docs/)
+2. Open an issue on GitHub
+3. Contact the development team
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 # React + TypeScript + Vite
 
