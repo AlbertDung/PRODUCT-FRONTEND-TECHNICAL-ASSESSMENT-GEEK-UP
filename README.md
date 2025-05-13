@@ -61,7 +61,7 @@ Before you begin, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/geekup-web-app.git
+git clone https://github.com/AlbertDung/PRODUCT-FRONTEND-TECHNICAL-ASSESSMENT-GEEK-UP.git
 cd web-app
 ```
 
