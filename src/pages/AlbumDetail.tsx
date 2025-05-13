@@ -12,7 +12,7 @@ const AlbumDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const albumId = Number(id);
-  const [photoPage, setPhotoPage] = React.useState(1);
+  const [currentPhotoPage, setCurrentPhotoPage] = React.useState<number>(1);
   const [viewerOpen, setViewerOpen] = React.useState(false);
   const [viewerIndex, setViewerIndex] = React.useState(0);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
@@ -51,7 +51,7 @@ const AlbumDetail = () => {
 
   const totalPhotos = photos?.length || 0;
   const totalPhotoPages = Math.ceil(totalPhotos / PHOTOS_PER_PAGE);
-  const startPhotoIdx = (photoPage - 1) * PHOTOS_PER_PAGE;
+  const startPhotoIdx = (currentPhotoPage - 1) * PHOTOS_PER_PAGE;
   const endPhotoIdx = startPhotoIdx + PHOTOS_PER_PAGE;
   const currentPhotos = photos?.slice(startPhotoIdx, endPhotoIdx) || [];
 
@@ -61,8 +61,8 @@ const AlbumDetail = () => {
   };
 
   // Navigate to new page and scroll to top
-  const handlePageChange = (page: number) => {
-    setPhotoPage(page);
+  const handlePageChange = (newPage: number) => {
+    setCurrentPhotoPage(newPage);
     window.scrollTo({
       top: document.getElementById('photos-section')?.offsetTop || 0,
       behavior: 'smooth'
@@ -223,19 +223,19 @@ const AlbumDetail = () => {
             {isMobile ? (
               <>
                 <button
-                  onClick={() => handlePageChange(Math.max(1, photoPage - 1))}
-                  disabled={photoPage === 1}
+                  onClick={() => handlePageChange(Math.max(1, currentPhotoPage - 1))}
+                  disabled={currentPhotoPage === 1}
                   className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed flex items-center py-1.5 px-3 text-xs"
                   aria-label="Previous page"
                 >
                   <FiChevronLeft className="mr-1" /> Prev
                 </button>
                 <span className="text-xs md:text-sm font-medium text-gray-700 px-2">
-                  Page {photoPage} of {totalPhotoPages}
+                  Page {currentPhotoPage} of {totalPhotoPages}
                 </span>
                 <button
-                  onClick={() => handlePageChange(Math.min(totalPhotoPages, photoPage + 1))}
-                  disabled={photoPage === totalPhotoPages}
+                  onClick={() => handlePageChange(Math.min(totalPhotoPages, currentPhotoPage + 1))}
+                  disabled={currentPhotoPage === totalPhotoPages}
                   className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed flex items-center py-1.5 px-3 text-xs"
                   aria-label="Next page"
                 >
@@ -247,15 +247,15 @@ const AlbumDetail = () => {
               <>
                 <button
                   onClick={() => handlePageChange(1)}
-                  disabled={photoPage === 1}
+                  disabled={currentPhotoPage === 1}
                   className="hidden sm:flex btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed items-center py-1.5 px-3 text-xs"
                   aria-label="First page"
                 >
                   <FiChevronsLeft className="mr-1" /> First
                 </button>
                 <button
-                  onClick={() => handlePageChange(photoPage - 1)}
-                  disabled={photoPage === 1}
+                  onClick={() => handlePageChange(currentPhotoPage - 1)}
+                  disabled={currentPhotoPage === 1}
                   className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed flex items-center py-1.5 px-3 text-xs"
                   aria-label="Previous page"
                 >
@@ -270,7 +270,7 @@ const AlbumDetail = () => {
                       return (
                         pageNum === 1 ||
                         pageNum === totalPhotoPages ||
-                        (pageNum >= photoPage - 1 && pageNum <= photoPage + 1)
+                        (pageNum >= currentPhotoPage - 1 && pageNum <= currentPhotoPage + 1)
                       );
                     })
                     .map((pageNum, index, array) => {
@@ -285,12 +285,12 @@ const AlbumDetail = () => {
                           <button
                             onClick={() => handlePageChange(pageNum)}
                             className={`w-8 h-8 rounded-lg text-xs font-medium transition-colors duration-200 ${
-                              pageNum === photoPage
+                              pageNum === currentPhotoPage
                                 ? 'bg-primary-600 text-white'
                                 : 'text-gray-600 hover:bg-gray-100'
                             }`}
                             aria-label={`Page ${pageNum}`}
-                            aria-current={pageNum === photoPage ? 'page' : undefined}
+                            aria-current={pageNum === currentPhotoPage ? 'page' : undefined}
                           >
                             {pageNum}
                           </button>
@@ -300,8 +300,8 @@ const AlbumDetail = () => {
                 </div>
                 
                 <button
-                  onClick={() => handlePageChange(photoPage + 1)}
-                  disabled={photoPage === totalPhotoPages}
+                  onClick={() => handlePageChange(currentPhotoPage + 1)}
+                  disabled={currentPhotoPage === totalPhotoPages}
                   className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed flex items-center py-1.5 px-3 text-xs"
                   aria-label="Next page"
                 >
@@ -309,7 +309,7 @@ const AlbumDetail = () => {
                 </button>
                 <button
                   onClick={() => handlePageChange(totalPhotoPages)}
-                  disabled={photoPage === totalPhotoPages}
+                  disabled={currentPhotoPage === totalPhotoPages}
                   className="hidden sm:flex btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed items-center py-1.5 px-3 text-xs"
                   aria-label="Last page"
                 >

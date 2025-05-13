@@ -12,17 +12,16 @@ const AlbumList = () => {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const page = Number(searchParams.get('page')) || 1;
-  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPageSize, setCurrentPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  const [showFilters, setShowFilters] = useState(false);
-  // Track screen size to adjust layout
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+  const [showFilters, setShowFilters] = useState<boolean>(false);
+  const [isMobileView, setIsMobileView] = useState<boolean>(window.innerWidth < 640);
 
-  // Update isMobile state when window resizes
+  // Update isMobileView state when window resizes
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 640);
+      setIsMobileView(window.innerWidth < 640);
     };
     
     window.addEventListener('resize', handleResize);
@@ -45,9 +44,9 @@ const AlbumList = () => {
     album.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const totalPages = filteredAlbums ? Math.ceil(filteredAlbums.length / pageSize) : 0;
-  const startIndex = (page - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
+  const totalPages = filteredAlbums ? Math.ceil(filteredAlbums.length / currentPageSize) : 0;
+  const startIndex = (page - 1) * currentPageSize;
+  const endIndex = startIndex + currentPageSize;
   const currentAlbums = filteredAlbums?.slice(startIndex, endIndex) || [];
 
   const handlePageChange = (newPage: number) => {
@@ -57,7 +56,7 @@ const AlbumList = () => {
   };
 
   const handlePageSizeChange = (newSize: number) => {
-    setPageSize(newSize);
+    setCurrentPageSize(newSize);
     setSearchParams({ page: '1' }); // Reset to first page when changing page size
   };
 
@@ -260,7 +259,7 @@ const AlbumList = () => {
                     <tr 
                       key={album.id} 
                       className="hover:bg-gray-50 cursor-pointer"
-                      onClick={() => isMobile ? navigate(`/albums/${album.id}`) : null}
+                      onClick={() => isMobileView ? navigate(`/albums/${album.id}`) : null}
                     >
                       <td className="px-3 md:px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
@@ -312,7 +311,7 @@ const AlbumList = () => {
           currentPage={page}
           totalPages={totalPages}
           totalItems={filteredAlbums.length}
-          pageSize={pageSize}
+          pageSize={currentPageSize}
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
         />
