@@ -243,7 +243,7 @@ const AlbumList = () => {
       {viewMode === 'list' && currentAlbums?.length > 0 && (
         <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200 text-sm">
+            <table className="min-w-full divide-y divide-gray-200 text-sm hidden sm:table">
               <thead className="bg-gray-50">
                 <tr>
                   <th scope="col" className="px-3 md:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Album</th>
@@ -291,9 +291,10 @@ const AlbumList = () => {
                       <td className="px-3 md:px-6 py-4 whitespace-nowrap text-right text-xs md:text-sm font-medium">
                         <button
                           onClick={(e) => { e.stopPropagation(); navigate(`/albums/${album.id}`); }}
-                          className="text-primary-600 hover:text-primary-900"
+                          className="btn btn-primary inline-flex items-center gap-1.5 py-1.5 px-3 text-xs md:text-sm"
                         >
-                          View
+                          <FiEye className="w-3.5 h-3.5" />
+                          <span>View</span>
                         </button>
                       </td>
                     </tr>
@@ -301,6 +302,49 @@ const AlbumList = () => {
                 })}
               </tbody>
             </table>
+            {/* Mobile Card List */}
+            <div className="sm:hidden space-y-3 p-1">
+              {currentAlbums?.map((album) => {
+                const user = getUserById(album.userId);
+                return (
+                  <div
+                    key={album.id}
+                    className="rounded-xl border border-gray-200 bg-white shadow-sm flex flex-col p-3 gap-2 cursor-pointer hover:shadow-md transition"
+                    onClick={() => navigate(`/albums/${album.id}`)}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="h-8 w-8 flex items-center justify-center bg-primary-50 rounded-lg text-base font-display font-bold text-primary-600/80 border border-primary-100">
+                        {album.id}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-semibold text-gray-900 truncate" title={album.title}>{album.title}</div>
+                        {user && (
+                          <div className="flex items-center gap-1.5 text-xs text-gray-500 mt-0.5">
+                            <img
+                              src={getAvatarUrl(user.name)}
+                              alt={user.name}
+                              className="h-5 w-5 rounded-full ring-1 ring-white"
+                            />
+                            <span className="truncate max-w-[80px]" title={user.name}>{user.name}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between mt-1">
+                      <span className="px-2 py-1 inline-flex text-xs leading-4 font-semibold rounded-full bg-green-100 text-green-800">Active</span>
+                      <button
+                        onClick={e => { e.stopPropagation(); navigate(`/albums/${album.id}`); }}
+                        className="btn btn-primary flex items-center gap-1.5 py-1 px-2 text-xs"
+                        aria-label={`View album: ${album.title}`}
+                      >
+                        <FiEye className="w-3.5 h-3.5" />
+                        <span>View</span>
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
