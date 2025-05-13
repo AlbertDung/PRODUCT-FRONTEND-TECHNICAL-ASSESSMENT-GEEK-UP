@@ -2,6 +2,20 @@
 
 A modern web application built with React, TypeScript, and Vite, designed for managing and organizing tech events and meetups.
 
+## Preview
+
+### Web Platform
+
+| Home | Albums (Grid) | Albums (List) | Album Details | Photo Preview | User List | User Details |
+|------|---------------|---------------|--------------|---------------|-----------|-------------|
+| ![Home](result/Web/home.jpeg) | ![Albums Grid](result/Web/Albums_GridView.jpeg) | ![Albums List](result/Web/Album_ListView.jpeg) | ![Album Details](result/Web/Album_Details.jpeg) | ![Photo Preview](result/Web/Photo_Preview.jpeg) | ![User List](result/Web/User.jpeg) | ![User Details](result/Web/User_Details.jpeg) |
+
+### Mobile App Platform
+
+| Home | Albums (Grid) | Albums (List) | Album Details | Search User | User List | User Details |
+|------|---------------|---------------|--------------|-------------|-----------|-------------|
+| ![Home App](result/App/Home_app.jpeg) | ![Albums Grid App](result/App/Album_GridView_app.jpeg) | ![Albums List App](result/App/Album_Listview_app.jpeg) | ![Album Details App](result/App/Album_Details_app.jpeg) | ![Search User App](result/App/Search_User_app.jpeg) | ![User App](result/App/User_app.jpeg) | ![User Details App](result/App/User_Details_app.jpeg) |
+
 ## Prerequisites
 
 Before you begin, ensure you have the following installed:
@@ -50,7 +64,7 @@ npm cache clean --force
 Create a `.env` file in the root directory:
 
 ```bash
-cp .env.example .env
+cp .env
 ```
 
 Required environment variables:
