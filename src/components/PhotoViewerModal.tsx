@@ -9,25 +9,25 @@ interface PhotoViewerModalProps {
 }
 
 export default function PhotoViewerModal({ photos, initialIndex, onClose }: PhotoViewerModalProps) {
-  const [current, setCurrent] = React.useState(initialIndex);
-  const [scale, setScale] = React.useState(1);
-  const [rotate, setRotate] = React.useState(0);
-  const [flipH, setFlipH] = React.useState(false);
-  const [flipV, setFlipV] = React.useState(false);
-  const [isFullscreen, setIsFullscreen] = React.useState(false);
+  const [currentPhotoIndex, setCurrentPhotoIndex] = React.useState<number>(initialIndex);
+  const [zoomScale, setZoomScale] = React.useState<number>(1);
+  const [rotationAngle, setRotationAngle] = React.useState<number>(0);
+  const [isFlippedHorizontal, setIsFlippedHorizontal] = React.useState<boolean>(false);
+  const [isFlippedVertical, setIsFlippedVertical] = React.useState<boolean>(false);
+  const [isFullscreenMode, setIsFullscreenMode] = React.useState<boolean>(false);
   const backdropRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setCurrent((c) => Math.min(c, photos.length - 1));
+    setCurrentPhotoIndex((c) => Math.min(c, photos.length - 1));
   }, [photos]);
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft') setCurrent((c) => (c > 0 ? c - 1 : c));
-      if (e.key === 'ArrowRight') setCurrent((c) => (c < photos.length - 1 ? c + 1 : c));
-      if (e.key === 'Home') setCurrent(0);
-      if (e.key === 'End') setCurrent(photos.length - 1);
+      if (e.key === 'ArrowLeft') setCurrentPhotoIndex((c) => (c > 0 ? c - 1 : c));
+      if (e.key === 'ArrowRight') setCurrentPhotoIndex((c) => (c < photos.length - 1 ? c + 1 : c));
+      if (e.key === 'Home') setCurrentPhotoIndex(0);
+      if (e.key === 'End') setCurrentPhotoIndex(photos.length - 1);
     }
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
@@ -38,37 +38,37 @@ export default function PhotoViewerModal({ photos, initialIndex, onClose }: Phot
   }
 
   function handleFlipHorizontal() {
-    setFlipH((f) => !f);
+    setIsFlippedHorizontal((prev) => !prev);
   }
   function handleFlipVertical() {
-    setFlipV((f) => !f);
+    setIsFlippedVertical((prev) => !prev);
   }
   function handleRotateLeft() {
-    setRotate((r) => r - 90);
+    setRotationAngle((prev) => prev - 90);
   }
   function handleRotateRight() {
-    setRotate((r) => r + 90);
+    setRotationAngle((prev) => prev + 90);
   }
   function handleZoomIn() {
-    setScale((s) => Math.min(s + 0.2, 3));
+    setZoomScale((prev) => Math.min(prev + 0.2, 3));
   }
   function handleZoomOut() {
-    setScale((s) => Math.max(s - 0.2, 0.5));
+    setZoomScale((prev) => Math.max(prev - 0.2, 0.5));
   }
   function handleReset() {
-    setScale(1);
-    setRotate(0);
-    setFlipH(false);
-    setFlipV(false);
+    setZoomScale(1);
+    setRotationAngle(0);
+    setIsFlippedHorizontal(false);
+    setIsFlippedVertical(false);
   }
   function handleSave() {
     const link = document.createElement('a');
-    link.href = photos[current].url;
-    link.download = photos[current].title;
+    link.href = photos[currentPhotoIndex].url;
+    link.download = photos[currentPhotoIndex].title;
     link.click();
   }
   async function handleShare() {
-    const photo = photos[current];
+    const photo = photos[currentPhotoIndex];
     if (navigator.share) {
       try {
         await navigator.share({
@@ -83,21 +83,21 @@ export default function PhotoViewerModal({ photos, initialIndex, onClose }: Phot
     }
   }
   function handleViewOriginal() {
-    window.open(photos[current].url, '_blank');
+    window.open(photos[currentPhotoIndex].url, '_blank');
   }
   function handleToggleFullscreen() {
-    setIsFullscreen((f) => !f);
+    setIsFullscreenMode((prev) => !prev);
   }
 
-  if (!photos[current]) return null;
-  const photo = photos[current];
-  const transform = `scale(${scale}) rotate(${rotate}deg) scaleX(${flipH ? -1 : 1}) scaleY(${flipV ? -1 : 1})`;
+  if (!photos[currentPhotoIndex]) return null;
+  const photo = photos[currentPhotoIndex];
+  const transform = `scale(${zoomScale}) rotate(${rotationAngle}deg) scaleX(${isFlippedHorizontal ? -1 : 1}) scaleY(${isFlippedVertical ? -1 : 1})`;
 
   return (
     <div
       ref={backdropRef}
       className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 backdrop-blur-sm ${
-        isFullscreen ? 'p-0' : 'p-1 sm:p-3'
+        isFullscreenMode ? 'p-0' : 'p-1 sm:p-3'
       }`}
       onClick={handleBackdropClick}
       aria-modal="true"
@@ -115,16 +115,16 @@ export default function PhotoViewerModal({ photos, initialIndex, onClose }: Phot
       {/* Navigation Buttons */}
       <button
         className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 text-white bg-black/40 hover:bg-black/70 rounded-full p-2 transition-colors disabled:opacity-30 z-10"
-        onClick={() => setCurrent((c) => Math.max(0, c - 1))}
-        disabled={current === 0}
+        onClick={() => setCurrentPhotoIndex((c) => Math.max(0, c - 1))}
+        disabled={currentPhotoIndex === 0}
         aria-label="Previous photo"
       >
         <FiChevronLeft className="h-6 w-6" />
       </button>
       <button
         className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 text-white bg-black/40 hover:bg-black/70 rounded-full p-2 transition-colors disabled:opacity-30 z-10"
-        onClick={() => setCurrent((c) => Math.min(photos.length - 1, c + 1))}
-        disabled={current === photos.length - 1}
+        onClick={() => setCurrentPhotoIndex((c) => Math.min(photos.length - 1, c + 1))}
+        disabled={currentPhotoIndex === photos.length - 1}
         aria-label="Next photo"
       >
         <FiChevronRight className="h-6 w-6" />
@@ -145,7 +145,7 @@ export default function PhotoViewerModal({ photos, initialIndex, onClose }: Phot
           <div className="text-white text-center">
             <h3 className="text-base sm:text-lg font-medium mb-1">{photo.title}</h3>
             <p className="text-xs sm:text-sm text-white/80">
-              {current + 1} / {photos.length}
+              {currentPhotoIndex + 1} / {photos.length}
             </p>
           </div>
         </div>
@@ -184,7 +184,7 @@ export default function PhotoViewerModal({ photos, initialIndex, onClose }: Phot
           <FiExternalLink className="w-5 h-5" />
         </button>
         <button onClick={handleToggleFullscreen} className="p-2 text-white hover:bg-white/10 rounded-lg" aria-label="Toggle fullscreen">
-          {isFullscreen ? <FiMinimize2 className="w-5 h-5" /> : <FiMaximize2 className="w-5 h-5" />}
+          {isFullscreenMode ? <FiMinimize2 className="w-5 h-5" /> : <FiMaximize2 className="w-5 h-5" />}
         </button>
       </div>
     </div>
