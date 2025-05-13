@@ -8,8 +8,8 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   const location = useLocation();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false); // default closed on mobile
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
 
   // Responsive sidebar: always open on desktop, toggle on mobile
   useEffect(() => {
@@ -62,7 +62,7 @@ const Layout = ({ children }: LayoutProps) => {
         <aside
           className={`fixed top-0 left-0 z-50 h-full transition-all duration-300 bg-white border-r border-gray-200
             ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-            ${isCollapsed ? 'w-20' : 'w-64'}
+            ${isSidebarCollapsed ? 'w-20' : 'w-64'}
             lg:fixed lg:translate-x-0
           `}
           style={{ boxShadow: '0 2px 8px 0 rgba(0,0,0,0.04)' }}
@@ -70,15 +70,15 @@ const Layout = ({ children }: LayoutProps) => {
           {/* Flex container for the entire sidebar content */}
           <div className="flex flex-col h-screen">
             {/* Logo */}
-            <div className={`flex items-center justify-between h-16 px-4 border-b border-gray-200 flex-shrink-0 ${isCollapsed ? 'justify-center' : ''}`}>
+            <div className={`flex items-center justify-between h-16 px-4 border-b border-gray-200 flex-shrink-0 ${isSidebarCollapsed ? 'justify-center' : ''}`}>
               <Link 
                 to="/" 
-                className={`text-xl font-display font-bold bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent ${isCollapsed ? 'text-center w-full' : ''}`}
+                className={`text-xl font-display font-bold bg-gradient-to-r from-primary-600 to-accent-500 bg-clip-text text-transparent ${isSidebarCollapsed ? 'text-center w-full' : ''}`}
               >
-                {isCollapsed ? 'A' : (<span>Albert <span className="text-accent-500">AnhDung</span></span>)}
+                {isSidebarCollapsed ? 'A' : (<span>Albert <span className="text-accent-500">AnhDung</span></span>)}
               </Link>
               {/* Close button for mobile */}
-              {!isCollapsed && window.innerWidth < 1024 && (
+              {!isSidebarCollapsed && window.innerWidth < 1024 && (
                 <button
                   onClick={() => setIsSidebarOpen(false)}
                   className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 lg:hidden"
@@ -98,20 +98,20 @@ const Layout = ({ children }: LayoutProps) => {
                     isActive(path)
                       ? 'bg-primary-50 text-primary-600'
                       : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                  } ${isCollapsed ? 'justify-center' : ''}`}
+                  } ${isSidebarCollapsed ? 'justify-center' : ''}`}
                   onClick={() => {
                     // Only close sidebar on mobile
                     if (window.innerWidth < 1024) setIsSidebarOpen(false);
                   }}
                 >
-                  <Icon className={`w-5 h-5 ${isCollapsed ? '' : 'mr-3'}`} />
-                  {!isCollapsed && <span>{label}</span>}
+                  <Icon className={`w-5 h-5 ${isSidebarCollapsed ? '' : 'mr-3'}`} />
+                  {!isSidebarCollapsed && <span>{label}</span>}
                 </Link>
               ))}
             </nav>
 
             {/* User Profile */}
-            <div className={`p-4 border-t border-gray-200 flex-shrink-0 ${isCollapsed ? 'flex flex-col items-center' : ''}`}>
+            <div className={`p-4 border-t border-gray-200 flex-shrink-0 ${isSidebarCollapsed ? 'flex flex-col items-center' : ''}`}>
               <div className="flex items-center space-x-3">
                 <div className="flex-shrink-0">
                   <img
@@ -120,7 +120,7 @@ const Layout = ({ children }: LayoutProps) => {
                     alt="Admin"
                   />
                 </div>
-                {!isCollapsed && (
+                {!isSidebarCollapsed && (
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-900 truncate">Admin User</p>
                     <p className="text-xs text-gray-500 truncate">admin@example.com</p>
@@ -132,14 +132,14 @@ const Layout = ({ children }: LayoutProps) => {
 
           {/* Collapse/Expand Button */}
           <button
-            onClick={() => setIsCollapsed((c) => !c)}
+            onClick={() => setIsSidebarCollapsed((prev) => !prev)}
             className="absolute top-1/2 -right-3 transform -translate-y-1/2 bg-white border border-gray-200 shadow rounded-full p-2 flex items-center justify-center transition-all duration-300 hover:bg-gray-100 focus:outline-none hidden lg:flex"
             style={{ zIndex: 60 }}
-            aria-label={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
-            title={isCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            aria-label={isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
+            title={isSidebarCollapsed ? 'Expand sidebar' : 'Collapse sidebar'}
           >
             <FiChevronLeft
-              className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${isCollapsed ? 'rotate-180' : ''}`}
+              className={`w-5 h-5 text-gray-500 transition-transform duration-300 ${isSidebarCollapsed ? 'rotate-180' : ''}`}
             />
           </button>
         </aside>
@@ -157,7 +157,7 @@ const Layout = ({ children }: LayoutProps) => {
       )}
 
       {/* Main Content */}
-      <div className={`flex-1 flex flex-col min-h-screen ${isCollapsed ? 'lg:ml-20' : 'lg:ml-64'}`}>
+      <div className={`flex-1 flex flex-col min-h-screen ${isSidebarCollapsed ? 'lg:ml-20' : 'lg:ml-64'}`}>
         {/* Top Navigation */}
         <header className="sticky top-0 z-20 bg-white border-b border-gray-200 flex items-center h-16 px-2 sm:px-4 lg:px-8">
           <div className="flex-1 flex justify-end items-center space-x-2 sm:space-x-4">
