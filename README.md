@@ -89,7 +89,7 @@ npm run preview
 - `npm run test` - Run unit tests
 - `npm run test:coverage` - Run tests with coverage report
 - `npm run format` - Format code with Prettier
-
+<!-- 
 ## Development Guidelines
 
 1. **Code Style**
@@ -111,7 +111,7 @@ npm run preview
 3. **Testing**
    - Write tests for new features
    - Maintain test coverage above 80%
-   - Run tests before committing
+   - Run tests before committing -->
 
 ## Troubleshooting
 
@@ -144,7 +144,7 @@ For any issues or questions:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
+<!-- 
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -198,4 +198,4 @@ export default tseslint.config({
     ...reactDom.configs.recommended.rules,
   },
 })
-```
+``` -->
