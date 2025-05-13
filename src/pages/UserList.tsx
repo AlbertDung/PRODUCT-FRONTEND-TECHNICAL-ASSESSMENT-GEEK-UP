@@ -10,10 +10,10 @@ const DEFAULT_PAGE_SIZE = 8;
 
 const UserList = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(DEFAULT_PAGE_SIZE);
-  const [showFilters, setShowFilters] = useState(false);
+  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPageSize, setCurrentPageSize] = useState<number>(DEFAULT_PAGE_SIZE);
+  const [showFilters, setShowFilters] = useState<boolean>(false);
 
   const { data: users, isLoading } = useQuery<User[]>({
     queryKey: ['users'],
@@ -25,19 +25,19 @@ const UserList = () => {
     user.email.toLowerCase().includes(searchQuery.toLowerCase())
   ) || [];
 
-  const totalPages = Math.ceil(filteredUsers.length / pageSize);
-  const startIndex = (page - 1) * pageSize;
-  const endIndex = startIndex + pageSize;
+  const totalPages = Math.ceil(filteredUsers.length / currentPageSize);
+  const startIndex = (currentPage - 1) * currentPageSize;
+  const endIndex = startIndex + currentPageSize;
   const currentUsers = filteredUsers.slice(startIndex, endIndex);
 
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
-    setPage(newPage);
+    setCurrentPage(newPage);
   };
 
   const handlePageSizeChange = (newSize: number) => {
-    setPageSize(newSize);
-    setPage(1); // Reset to first page when changing page size
+    setCurrentPageSize(newSize);
+    setCurrentPage(1); // Reset to first page when changing page size
   };
 
   if (isLoading) {
@@ -86,7 +86,7 @@ const UserList = () => {
             type="text"
             placeholder="Search users..."
             value={searchQuery}
-            onChange={(e) => { setSearchQuery(e.target.value); setPage(1); }}
+            onChange={(e) => { setSearchQuery(e.target.value); setCurrentPage(1); }}
             className="input pl-10 w-full"
           />
         </div>
@@ -207,10 +207,10 @@ const UserList = () => {
       {/* Pagination */}
       {filteredUsers.length > 0 && (
         <Pagination
-          currentPage={page}
+          currentPage={currentPage}
           totalPages={totalPages}
           totalItems={filteredUsers.length}
-          pageSize={pageSize}
+          pageSize={currentPageSize}
           onPageChange={handlePageChange}
           onPageSizeChange={handlePageSizeChange}
         />

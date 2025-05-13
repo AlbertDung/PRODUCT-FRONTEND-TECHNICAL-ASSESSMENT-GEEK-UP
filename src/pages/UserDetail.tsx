@@ -11,7 +11,7 @@ const UserDetail = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const userId = Number(id);
-  const [page, setPage] = React.useState(1);
+  const [currentPage, setCurrentPage] = React.useState<number>(1);
 
   const { data: user, isLoading: isLoadingUser } = useQuery<User>({
     queryKey: ['user', userId],
@@ -29,13 +29,13 @@ const UserDetail = () => {
 
   const totalAlbums = albums?.length || 0;
   const totalPages = Math.ceil(totalAlbums / ITEMS_PER_PAGE);
-  const startIndex = (page - 1) * ITEMS_PER_PAGE;
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const endIndex = startIndex + ITEMS_PER_PAGE;
   const currentAlbums = albums?.slice(startIndex, endIndex) || [];
 
   const handlePageChange = (newPage: number) => {
     if (newPage < 1 || newPage > totalPages) return;
-    setPage(newPage);
+    setCurrentPage(newPage);
   };
 
   if (isLoading) {
@@ -154,15 +154,15 @@ const UserDetail = () => {
           <div className="flex justify-center items-center space-x-2 mt-8 flex-wrap">
             <button
               onClick={() => handlePageChange(1)}
-              disabled={page === 1}
+              disabled={currentPage === 1}
               className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
               aria-label="First page"
             >
               <FiChevronsLeft className="mr-1" /> First
             </button>
             <button
-              onClick={() => handlePageChange(page - 1)}
-              disabled={page === 1}
+              onClick={() => handlePageChange(currentPage - 1)}
+              disabled={currentPage === 1}
               className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
               aria-label="Previous page"
             >
@@ -174,7 +174,7 @@ const UserDetail = () => {
                   key={pageNum}
                   onClick={() => handlePageChange(pageNum)}
                   className={`w-8 h-8 rounded-lg text-sm font-medium transition-colors duration-200 ${
-                    pageNum === page
+                    pageNum === currentPage
                       ? 'bg-primary-600 text-white'
                       : 'text-gray-600 hover:bg-gray-100'
                   }`}
@@ -185,8 +185,8 @@ const UserDetail = () => {
               ))}
             </div>
             <button
-              onClick={() => handlePageChange(page + 1)}
-              disabled={page === totalPages}
+              onClick={() => handlePageChange(currentPage + 1)}
+              disabled={currentPage === totalPages}
               className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
               aria-label="Next page"
             >
@@ -194,7 +194,7 @@ const UserDetail = () => {
             </button>
             <button
               onClick={() => handlePageChange(totalPages)}
-              disabled={page === totalPages}
+              disabled={currentPage === totalPages}
               className="btn btn-secondary disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
               aria-label="Last page"
             >
