@@ -1,18 +1,6 @@
-import { createContext, useEffect, useState } from 'react';
-
-type Theme = 'light' | 'dark';
-
-export interface ThemeContextType {
-  theme: Theme;
-  toggleTheme: () => void;
-}
-
-const defaultContext: ThemeContextType = {
-  theme: 'light',
-  toggleTheme: () => {},
-};
-
-export const ThemeContext = createContext<ThemeContextType>(defaultContext);
+import { useEffect, useState } from 'react';
+import { ThemeContext } from './theme';
+import type { Theme } from './theme';
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setTheme] = useState<Theme>(() => {
