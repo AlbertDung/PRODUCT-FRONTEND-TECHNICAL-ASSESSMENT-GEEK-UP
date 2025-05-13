@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { FiUsers, FiImage, FiActivity, FiTrendingUp } from 'react-icons/fi';
 import { getUsers, getAlbums } from '../services/api';
