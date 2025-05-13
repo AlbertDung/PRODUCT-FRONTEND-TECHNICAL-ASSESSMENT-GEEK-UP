@@ -59,7 +59,7 @@ export default function Home() {
         <div>
           <h2 className="text-xl font-semibold mb-2">Source Code</h2>
           <p className="text-gray-600 mb-2">The full source code is included in the submission and available at:</p>
-          <a href="https://github.com/your-username/your-repo" target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-primary-600 hover:underline"><FiGithub className="mr-2" /> GitHub Repository <FiExternalLink className="ml-1" /></a>
+          <a href="https://github.com/AlbertDung/PRODUCT-FRONTEND-TECHNICAL-ASSESSMENT-GEEK-UP.git" target="_blank" rel="noopener noreferrer" className="inline-flex items-center text-primary-600 hover:underline"><FiGithub className="mr-2" /> GitHub Repository <FiExternalLink className="ml-1" /></a>
         </div>
         <div className="flex gap-3 mt-4 md:mt-0">
           <Link to="/albums" className="btn btn-primary flex items-center gap-2"><FiImage /> Album List</Link>
